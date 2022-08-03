@@ -1,6 +1,5 @@
 {
   "engines": {
-    "node": "16.x",
     "yarn": "1.22.x"
   },
   "name": "facebook-client",
