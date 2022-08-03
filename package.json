@@ -1,6 +1,10 @@
 {
-  "name": "appknowledgehub",
-  "version": "0.1.0",
+  "engines": {
+    "node": "18.2.0",
+    "yarn": "1.22.19"
+  },
+  "name": "facebook-client",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.9.3",
