@@ -21,7 +21,7 @@ const SignUp = () => {
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         <FormAvatarUpload name='avatar' label='Avatar' />
         <Box sx={{ display: 'flex', flexDirection: 'row', gap: '.5rem' }}>
-          <FormTextField name='fist_name' type='text' label='First Name' required />
+          <FormTextField name='first_name' type='text' label='First Name' required />
           <FormTextField name='last_name' type='text' label='Last Name' required />
         </Box>
         <FormTextField name='email' type='email' label='Email' required />

@@ -1,9 +1,10 @@
 // https://react-hook-form.com/advanced-usage#FormProviderPerformance
-import { useRef, useState } from 'react';
+import { useRef, useState, useContext } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { FormHelperText, Dialog, Alert } from '@mui/material';
 import { useValidationResolver } from './../../custom-hook/useValidationResolver';
 import { styled } from '@mui/material/styles';
+import GlobalContext from '../../context';
 
 const StyledForm = styled('form')``;
 
@@ -16,6 +17,7 @@ const Form = ({
   popUpError = false,
   ...otherProps
 }) => {
+  const { auth } = useContext(GlobalContext);
   const resolver = useValidationResolver(validationSchema);
   const formRef = useRef();
   const methods = useForm({ resolver });
@@ -36,6 +38,10 @@ const Form = ({
         }
       }
       if (res.status >= 400) {
+        // Logout user the server is down
+        if (res.status === 503 && auth.currentUser) {
+          auth.logout();
+        }
         console.log('onSuccess error', { res });
         setError(res.data.message);
       }

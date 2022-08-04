@@ -2,9 +2,10 @@
   "engines": {
     "yarn": "1.22.x"
   },
-  "name": "facebook-client",
+  "name": "websocial-client",
   "version": "1.0.0",
   "private": true,
+  "homepage": "https://websocial.live",
   "dependencies": {
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
@@ -36,6 +37,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "build:serve": "yarn build && yarn serve",
+    "serve": "cd build && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
