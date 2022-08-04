@@ -11,9 +11,13 @@ const schema = yup
       .string()
       .required()
       .matches(/\.(jpe?g|png|gif|bmp)$/i, 'File type is not valid (jpg, jpeg, png, gif, bmp)'),
-    name: yup
+    first_name: yup
       .string()
-      .required('Name is required')
+      .required('Firstname is required')
+      .matches(/^[a-zA-Z ]+$/, 'Name must contain only letters and spaces'),
+    last_name: yup
+      .string()
+      .required('Lastname is required')
       .matches(/^[a-zA-Z ]+$/, 'Name must contain only letters and spaces'),
     email: yup.string().required('Email is required').email('Invalid email'),
     password: yup

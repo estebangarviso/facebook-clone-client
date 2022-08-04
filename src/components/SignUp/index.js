@@ -20,7 +20,10 @@ const SignUp = () => {
     <Form serviceCallback={AuthService.register} validationSchema={schema} onSuccess={handleSuccess}>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         <FormAvatarUpload name='avatar' label='Avatar' />
-        <FormTextField name='name' type='text' label='Name' required />
+        <Box sx={{ display: 'flex', flexDirection: 'row', gap: '.5rem' }}>
+          <FormTextField name='fist_name' type='text' label='First Name' required />
+          <FormTextField name='last_name' type='text' label='Last Name' required />
+        </Box>
         <FormTextField name='email' type='email' label='Email' required />
         <FormPassword name='password' label='Password' required />
         <FormPassword name='confirmPassword' label='Confirm Password' required />
