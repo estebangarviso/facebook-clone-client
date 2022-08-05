@@ -29,11 +29,8 @@ const Form = ({
     try {
       const formData = new FormData(formRef.current);
       const res = await serviceCallback(formData);
-      console.log('onSubmit from Form try', res);
       if (onSuccess) {
-        console.log('onSubmit from Form onSuccess', res);
         if (res.success || res.status === 200) {
-          console.log('onSuccess success', { res });
           onSuccess(res);
         }
       }
@@ -42,7 +39,6 @@ const Form = ({
         if (res.status === 503 && auth.currentUser) {
           auth.logout();
         }
-        console.log('onSuccess error', { res });
         setError(res.data.message);
       }
       if (res.sucess || res.status === 200) {
@@ -50,7 +46,7 @@ const Form = ({
         methods.reset();
       }
     } catch (err) {
-      console.log('onSubmit from Form catch', err);
+      console.log('Error on onSubmit', err);
       setError(err.message);
       throw err;
     }

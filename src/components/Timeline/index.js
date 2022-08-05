@@ -13,8 +13,6 @@ import {
 import InfiniteScroll from 'react-infinite-scroller';
 
 const Timeline = () => {
-  const dispatch = useDispatch();
-
   const posts = useSelector(selectPosts);
   const hasMore = useSelector(selectHasMore);
   const pageNumber = useSelector(selectPageNumber);
@@ -24,13 +22,6 @@ const Timeline = () => {
   const handleLoadMore = async () => {
     // TODO: add loading indicator
   };
-
-  useEffect(() => {
-    if (postStatus === 'idle') {
-      dispatch(fetchPosts());
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   if (postStatus === 'failed') {
     return (
