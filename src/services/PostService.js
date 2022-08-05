@@ -1,33 +1,21 @@
 import axios, { handleError, handleSuccess } from '../utils/axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const relativePath = '/posts';
-const baseUrl = `${axios.defaults.baseURL}${relativePath}`;
 
-export const fetchPosts = createAsyncThunk('posts/getPosts', async () => {
+export const fetchPosts = createAsyncThunk('posts/getPosts', async ({ pageNumber, pageSize } = {}) => {
+  const query = new URLSearchParams();
+  if (pageNumber) query.append('pageNumber', pageNumber);
+  if (pageSize) query.append('pageSize', pageSize);
+  const stringQuery = query.toString();
+  console.log('PostService.fetchPosts query', query.toString(), { pageNumber, pageSize });
   try {
-    const res = await axios.get(relativePath);
+    const res = await axios.get(`${relativePath}${stringQuery ? '?' + stringQuery : ''}`);
     return res.data;
   } catch (err) {
     return handleError(err);
   }
 });
-
-export const postsApi = createApi({
-  reducerPath: 'postsApi',
-  baseQuery: fetchBaseQuery({ baseUrl }),
-  endpoints: (builder) => ({
-    getPosts: builder.query({
-      path: '/'
-    }),
-    getPostsByPageNumberAndPageSize: builder.query({
-      query: (pageNumber, pageSize) => `?pageNumber=${pageNumber}&pageSize=${pageSize}`
-    })
-  })
-});
-
-export const { useGetPostsByPageNumberAndPageSizeQuery, useGetPostsQuery } = postsApi;
 
 export const addPost = createAsyncThunk('posts/addPost', add);
 async function add(formData) {
@@ -43,7 +31,7 @@ async function add(formData) {
 export const addComment = createAsyncThunk('comments/addComment', async (formData) => {
   console.log('PostService.addComment formData', formData);
   try {
-    const res = await axios.post(relativePath + '/' + formData.get('postId') + '/comments', formData);
+    const res = await axios.post(`${relativePath}/${formData.get('postId')}/comments`, formData);
     return handleSuccess(res);
   } catch (err) {
     return handleError(err);

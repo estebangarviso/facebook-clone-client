@@ -16,7 +16,7 @@ const Comment = ({ _id: commentId, content, createdAt, post: postId, user, comme
         <Box display='flex' alignItems='center' flexDirection='row' sx={{ width: '100%' }} position='relative'>
           <UserAvatar
             sx={{ mr: 1, width: '32px', height: '32px', alignSelf: 'start', zIndex: 1 }}
-            relativePath={user.avatar}
+            relativePath={user?.avatar}
           />
           <Box sx={{ flex: 1 }}>
             <Box bgcolor='background.comment' sx={{ borderRadius: '5px', py: '8px', px: '12px' }}>

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchPosts, addPost, postsApi } from '../../services/PostService';
+import { fetchPosts, addPost } from '../../services/PostService';
 
 const postsSlice = createSlice({
   name: 'posts',
@@ -20,13 +20,8 @@ const postsSlice = createSlice({
     },
     postDeleted: (state, action) => {
       state.data = state.data.filter((post) => post._id !== action.payload);
-    },
-    // Add the generated reducer as a specific top-level slice
-    [postsApi.reducerPath]: postsApi.reducer
+    }
   },
-  // Adding the api middleware enables caching, invalidation, polling,
-  // and other useful features of `rtk-query`.
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(postsApi.middleware),
   extraReducers(builder) {
     builder
       .addCase(fetchPosts.pending, (state, action) => {
@@ -39,7 +34,7 @@ const postsSlice = createSlice({
         // });
         // state.data = state.data.concat(loadedPosts);
         // const loadedPosts = posts.sort((a, b) => (b.createdAt > a.createdAt ? 1 : -1)); // sorted from backend
-        state.data = action.payload.posts;
+        state.data = [...state.data, ...action.payload.posts];
         state.hasMore = action.payload.hasMore;
         state.pageNumber = action.payload.pageNumber;
         state.pageSize = action.payload.pageSize;

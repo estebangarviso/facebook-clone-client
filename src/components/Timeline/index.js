@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Dialog, Alert, Box, Button } from '@mui/material';
-import { fetchPosts, useGetPostsQuery, useGetPostsByPageNumberAndPageSizeQuery } from '../../services/PostService';
+import { fetchPosts } from '../../services/PostService';
 import Post from '../Post';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -13,6 +13,8 @@ import {
 import InfiniteScroll from 'react-infinite-scroller';
 
 const Timeline = () => {
+  const dispatch = useDispatch();
+
   const posts = useSelector(selectPosts);
   const hasMore = useSelector(selectHasMore);
   const pageNumber = useSelector(selectPageNumber);
@@ -20,7 +22,11 @@ const Timeline = () => {
   const error = useSelector(getPostsError);
 
   const handleLoadMore = async () => {
-    // TODO: add loading indicator
+    dispatch(fetchPosts({ pageNumber: pageNumber + 1 }));
+  };
+
+  const handleLoadPrevious = async () => {
+    dispatch(fetchPosts({ pageNumber: pageNumber - 1 }));
   };
 
   if (postStatus === 'failed') {
@@ -31,18 +37,29 @@ const Timeline = () => {
     );
   }
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    if (postStatus === 'idle') {
+      dispatch(fetchPosts());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <Box sx={{ py: 4 }}>
-      {/* <InfiniteScroll pageStart={0} loadMore={handleLoadMore} hasMore={hasMore} loader={<Post loading={true} />}> */}
-      {posts.map((post) => (
+      <InfiniteScroll pageStart={0} loadMore={handleLoadMore} hasMore={hasMore} loader={<Post loading={true} />}>
+        {posts.map((post) => (
+          <Post key={post._id} {...post} />
+        ))}
+      </InfiniteScroll>
+      {/* {posts.map((post) => (
         <Post key={post._id} {...post} />
       ))}
-      {/* </InfiniteScroll> */}
       {hasMore && (
         <Button onClick={handleLoadMore} fullWidth>
           Load more
         </Button>
-      )}
+      )} */}
     </Box>
   );
 };

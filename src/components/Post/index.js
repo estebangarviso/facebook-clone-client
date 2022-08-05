@@ -35,7 +35,7 @@ const Post = ({ _id, user, createdAt, content, media, loading }) => {
           loading ? (
             <Skeleton animation='wave' variant='circular' />
           ) : (
-            <UserAvatar aria-label='avatar' relativePath={user.avatar} />
+            <UserAvatar aria-label='avatar' relativePath={user?.avatar} />
           )
         }
         action={
