@@ -22,7 +22,7 @@ async function register(formData) {
 
 async function logout(token) {
   try {
-    const res = await axios.post(relativePath + '/logout', null, { token });
+    const res = await axios.post(relativePath + '/logout', null, { headers: { token } });
     return handleSuccess(res);
   } catch (err) {
     return handleError(err);
