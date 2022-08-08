@@ -20,9 +20,9 @@ async function register(formData) {
   }
 }
 
-async function logout() {
+async function logout(token) {
   try {
-    const res = await axios.post(relativePath + '/logout', null, { headers: { cookie: document.cookie } });
+    const res = await axios.post(relativePath + '/logout', null, { token });
     return handleSuccess(res);
   } catch (err) {
     return handleError(err);
