@@ -2,15 +2,11 @@
 import axios from 'axios';
 import { BACKEND_URL } from '../app/config';
 
-const instance = axios.create({
-  baseURL: BACKEND_URL,
-  withCredentials: true,
-  headers: {
-    'Content-Type': 'multipart/form-data'
-  }
-});
+axios.defaults.baseURL = BACKEND_URL;
+axios.defaults.withCredentials = true;
+axios.defaults.headers.common['Content-Type'] = 'multipart/form-data';
 
-export default instance;
+export default axios;
 
 export async function handleSuccess(res) {
   const response = await res;

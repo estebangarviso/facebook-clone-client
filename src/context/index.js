@@ -139,7 +139,7 @@ export const GlobalProvider = ({ children }) => {
         TOKEN_EXPIRATION_WARN_TIME_MILISECONDS
       );
     }
-    document.cookie = `token=${token}; expires=${new Date(tokenExp * 1000).toUTCString()};`;
+    document.cookie = `token=${token}; expires=${new Date(tokenExp * 1000).toUTCString()}; secure;`;
 
     let show = false;
     intervalRef.current = setInterval(() => {

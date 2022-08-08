@@ -8,9 +8,10 @@ export const fetchPosts = createAsyncThunk('posts/getPosts', async ({ pageNumber
   if (pageNumber) query.append('pageNumber', pageNumber);
   if (pageSize) query.append('pageSize', pageSize);
   const stringQuery = query.toString();
-  console.log('PostService.fetchPosts query', query.toString(), { pageNumber, pageSize });
   try {
-    const res = await axios.get(`${relativePath}${stringQuery ? '?' + stringQuery : ''}`);
+    const res = await axios.get(`${relativePath}${stringQuery ? '?' + stringQuery : ''}`, {
+      headers: { cookie: document.cookie }
+    });
     return res.data;
   } catch (err) {
     return handleError(err);
