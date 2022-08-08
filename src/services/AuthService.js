@@ -22,7 +22,7 @@ async function register(formData) {
 
 async function logout() {
   try {
-    const res = await axios.post(relativePath + '/logout');
+    const res = await axios.post(relativePath + '/logout', null, { headers: { cookie: document.cookie } });
     return handleSuccess(res);
   } catch (err) {
     return handleError(err);
