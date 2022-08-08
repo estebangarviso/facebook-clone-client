@@ -9,6 +9,7 @@ axios.defaults.headers.common['Content-Type'] = 'multipart/form-data';
 axios.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
+    console.log('axios.interceptors.request token', token);
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
