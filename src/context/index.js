@@ -97,7 +97,6 @@ export const GlobalProvider = ({ children }) => {
   const [showModalTokenIsAboutToExpire, setShowModalTokenIsAboutToExpire] = useState(false);
 
   const logout = () => {
-    const token = localStorage.getItem('token');
     wsRef.current?.close();
     localStorage.removeItem('token');
     setCurrentUser(null);
@@ -106,7 +105,7 @@ export const GlobalProvider = ({ children }) => {
     clearInterval(intervalWsRef.current);
     document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
     // call logout endpoint
-    AuthService.logout(token)
+    AuthService.logout()
       .then((res) => {
         return <Navigate to={AppRoutes.LOGIN} />;
       })

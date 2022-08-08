@@ -20,9 +20,9 @@ async function register(formData) {
   }
 }
 
-async function logout(token) {
+async function logout() {
   try {
-    const res = await axios.post(relativePath + '/logout', null, { headers: { token } });
+    const res = await axios.post(relativePath + '/logout');
     return handleSuccess(res);
   } catch (err) {
     return handleError(err);
