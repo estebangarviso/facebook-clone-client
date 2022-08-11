@@ -13,11 +13,21 @@ import { AppRoutes } from '../../app/routes';
 const SignUp = () => {
   const navigate = useNavigate();
   const handleSuccess = () => {
-    console.log('handleSuccess');
     navigate(AppRoutes.LOGIN);
   };
   return (
-    <Form serviceCallback={AuthService.register} validationSchema={schema} onSuccess={handleSuccess}>
+    <Form
+      serviceCallback={AuthService.register}
+      validationSchema={schema}
+      defaultValues={{
+        avatar: '',
+        first_name: '',
+        last_name: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+      }}
+      onSuccess={handleSuccess}>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         <FormAvatarUpload name='avatar' label='Avatar' />
         <Box sx={{ display: 'flex', flexDirection: 'row', gap: '.5rem' }}>
@@ -26,7 +36,7 @@ const SignUp = () => {
         </Box>
         <FormTextField name='email' type='email' label='Email' required />
         <FormPassword name='password' label='Password' required />
-        <FormPassword name='confirmPassword' label='Confirm Password' required />
+        <FormPassword name='confirm_password' label='Confirm Password' required />
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <FormButton type='submit' variant='contained' color='success' sx={{ color: 'white' }} animated>
             <Typography variant='button'>Sign Up</Typography>

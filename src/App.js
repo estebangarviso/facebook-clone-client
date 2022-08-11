@@ -11,7 +11,7 @@ import { GlobalProvider } from './context';
 import { AppRoutes } from './app/routes';
 import './App.css';
 
-const App = () => {
+export const App = () => {
   return (
     <ErrorBoundary>
       <BrowserRouter>

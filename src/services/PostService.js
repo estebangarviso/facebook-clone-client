@@ -18,7 +18,6 @@ export const fetchPosts = createAsyncThunk('posts/getPosts', async ({ pageNumber
 
 export const addPost = createAsyncThunk('posts/addPost', add);
 async function add(formData) {
-  console.log('PostService.add formData', formData);
   try {
     const res = await axios.post(relativePath, formData);
     return res.data;
@@ -28,7 +27,6 @@ async function add(formData) {
 }
 
 export const addComment = createAsyncThunk('comments/addComment', async (formData) => {
-  console.log('PostService.addComment formData', formData);
   try {
     const res = await axios.post(`${relativePath}/${formData.get('postId')}/comments`, formData);
     return handleSuccess(res);
@@ -41,7 +39,6 @@ export const getAllCommentsByPostId = createAsyncThunk('posts/getAllCommentsByPo
 async function getAllCommentsById(postId) {
   try {
     const res = await axios.get(relativePath + '/' + postId + '/comments');
-    console.log('PostService.getAllCommentsById res', res);
     return handleSuccess(res);
   } catch (err) {
     return handleError(err);

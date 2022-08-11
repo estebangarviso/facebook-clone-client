@@ -1,7 +1,7 @@
 // https://react-hook-form.com/advanced-usage#FormProviderPerformance
 import { useRef, useState, useContext } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
-import { FormHelperText, Dialog, Alert } from '@mui/material';
+import { FormHelperText, Modal, Alert } from '@mui/material';
 import { useValidationResolver } from './../../custom-hook/useValidationResolver';
 import { styled } from '@mui/material/styles';
 import GlobalContext from '../../context';
@@ -15,17 +15,17 @@ const Form = ({
   onSuccess,
   serviceCallback,
   popUpError = false,
+  defaultValues = {},
   ...otherProps
 }) => {
   const { auth } = useContext(GlobalContext);
   const resolver = useValidationResolver(validationSchema);
   const formRef = useRef();
-  const methods = useForm({ resolver });
+  const methods = useForm({ resolver, defaultValues });
   const [error, setError] = useState(false);
 
   const onSubmit = async (data) => {
     setError(false);
-    console.log('onSubmit from Form', data);
     try {
       const formData = new FormData(formRef.current);
       const res = await serviceCallback(formData);
@@ -46,7 +46,6 @@ const Form = ({
         methods.reset();
       }
     } catch (err) {
-      console.log('Error on onSubmit', err);
       setError(err.message);
       throw err;
     }
@@ -70,9 +69,9 @@ const Form = ({
         {children}
       </StyledForm>
       {popUpError ? (
-        <Dialog open={error} onClose={() => setError(false)}>
+        <Modal open={error} onClose={() => setError(false)} onBackdropClick={() => setError(false)}>
           <Alert severity='error'>{error}</Alert>
-        </Dialog>
+        </Modal>
       ) : (
         <FormHelperText error={error}>{error}</FormHelperText>
       )}

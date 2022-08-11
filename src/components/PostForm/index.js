@@ -12,7 +12,8 @@ import {
   IconButton,
   Button,
   Typography,
-  useMediaQuery
+  useMediaQuery,
+  InputBase
 } from '@mui/material';
 import { Close as CloseIcon } from '@mui/icons-material';
 import PostService from '../../services/PostService';
@@ -23,7 +24,7 @@ import FormButton from '../Form/FormButton';
 import GloabaContext from '../../context';
 import UserAvatar from '../UserAvatar';
 import { Friends as FriendsIcon } from '../../assets/icons/img';
-import { FontAwesomeSvgIcon } from '../../assets/icons';
+import { FontAwesomeSvgIcon, MediaIcon, LiveVideoIcon } from '../../assets/icons';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 const PostForm = () => {
@@ -48,14 +49,36 @@ const PostForm = () => {
   };
 
   const handleSuccess = (res) => {
-    console.log('handleSuccess', res);
     setOpen(false);
   };
 
   return (
     <>
       <Paper sx={{ py: '1rem', px: '1rem' }}>
-        <Button onClick={() => setOpen(true)}>Add Post</Button>
+        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+          <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            <UserAvatar />
+            <Box sx={{ display: 'flex', flexDirection: 'column', marginLeft: '1rem' }}>
+              <InputBase
+                placeholder={`What's on your mind, ${auth.currentUser.name.first}`}
+                onClick={() => setOpen(true)}
+              />
+            </Box>
+          </Box>
+          <Stack direction='row' justifyContent='space-between' alignItems='center' spacing={0.5}>
+            <Button variant='text' color='primary' startIcon={<LiveVideoIcon />}>
+              Live Video
+            </Button>
+            <Button
+              variant='text'
+              color='primary'
+              sx={{ borderRadius: '8px', textTransform: 'none' }}
+              startIcon={<MediaIcon sx={{ fontSize: '33px', color: 'success.main', backgroundColor: 'dark' }} />}
+              onClick={() => setOpen(true)}>
+              <Typography sx={{ color: 'grey.500', ml: '.5rem' }}>Photo/Video</Typography>
+            </Button>
+          </Stack>
+        </Box>
       </Paper>
       <Dialog
         open={open}
@@ -71,6 +94,10 @@ const PostForm = () => {
           component: Form,
           serviceCallback: PostService.add,
           validationSchema: schema,
+          defaultValues: {
+            content: '',
+            media: ''
+          },
           popUpError: true,
           onSuccess: handleSuccess
         }}
@@ -142,18 +169,7 @@ const PostForm = () => {
         <DialogActions id='post-form-dialog-actions'>
           <Box sx={{ width: '100%' }}>
             <Stack direction='row' justifyContent='space-between' alignItems='center' spacing={0.5}>
-              <FormMediaUploadButton
-                name='media'
-                label='Photo/Video'
-                iconProps={{ sx: { fontSize: '33px', color: 'success.main', backgroundColor: 'dark' } }}
-                labelProps={{ sx: { color: 'grey.500', ml: '.5rem' } }}
-                sx={{
-                  borderRadius: '8px',
-                  textTransform: 'none'
-                }}
-                variant='text'
-                fullWidth
-              />
+              <FormMediaUploadButton name='media' label='Photo/Video' variant='text' fullWidth />
             </Stack>
             <FormButton type='submit' variant='contained' color='primary' sx={{ flex: '1' }} fullWidth>
               Post

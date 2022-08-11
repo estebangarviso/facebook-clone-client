@@ -22,7 +22,14 @@ const CommentForm = ({ postId, replyTo = undefined, label = 'Write a comment...'
   return (
     <Box display='flex' flexDirection='row' {...otherProps}>
       <UserAvatar sx={{ mr: '1rem' }} />
-      <Form serviceCallback={handleServiceCallback} validationSchema={schema} enterSubmit={true}>
+      <Form
+        serviceCallback={handleServiceCallback}
+        validationSchema={schema}
+        enterSubmit={true}
+        defaultValues={{
+          content: ''
+        }}
+        autoComplete='off'>
         <Box display='flex' flexDirection='row' gap={1}>
           <FormTextField
             name='content'

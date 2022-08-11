@@ -50,7 +50,6 @@ const commentsSlice = createSlice({
       })
       .addCase(addComment.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        console.log('comments/add action.payload', action.payload);
         state.comments.push(action.payload);
       });
   }

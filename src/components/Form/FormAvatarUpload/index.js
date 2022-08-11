@@ -8,14 +8,16 @@ import { Box } from '@mui/material';
 const FormAvatarUpload = ({ name, label, ...otherProps }) => {
   const [avatar, setAvatar] = useState('');
   const theme = useTheme();
-  const { control, setValue } = useFormContext();
+  const { control, setValue, resetField } = useFormContext();
 
   return (
     <Controller
       render={({ field, fieldState: { error } }) => {
         const handleReset = () => {
-          setValue(name, '');
+          console.log('reset:before', 'field value is', field.value);
+          resetField(name);
           setAvatar('');
+          console.log('reset:after', 'field value is', field.value);
         };
 
         const handleChange = (e) => {

@@ -9,7 +9,7 @@ const schema = yup
     // }).optional(),
     avatar: yup
       .string()
-      .required()
+      .required('Avatar is required')
       .matches(/\.(jpe?g|png|gif|bmp)$/i, 'File type is not valid (jpg, jpeg, png, gif, bmp)'),
     first_name: yup
       .string()
@@ -27,7 +27,7 @@ const schema = yup
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
         'Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character'
       ),
-    confirmPassword: yup
+    confirm_password: yup
       .string()
       .required('Confirm password is required')
       .oneOf([yup.ref('password'), null], 'Passwords must match')

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Dialog, Alert, Box, Button } from '@mui/material';
+import { Alert, Box, Modal } from '@mui/material';
 import { fetchPosts } from '../../services/PostService';
 import Post from '../Post';
 import { useSelector, useDispatch } from 'react-redux';
@@ -25,15 +25,11 @@ const Timeline = () => {
     dispatch(fetchPosts({ pageNumber: pageNumber + 1 }));
   };
 
-  const handleLoadPrevious = async () => {
-    dispatch(fetchPosts({ pageNumber: pageNumber - 1 }));
-  };
-
   if (postStatus === 'failed') {
     return (
-      <Dialog open={true}>
+      <Modal open={true}>
         <Alert severity='error'>{error}</Alert>
-      </Dialog>
+      </Modal>
     );
   }
 
@@ -52,14 +48,6 @@ const Timeline = () => {
           <Post key={post._id} {...post} />
         ))}
       </InfiniteScroll>
-      {/* {posts.map((post) => (
-        <Post key={post._id} {...post} />
-      ))}
-      {hasMore && (
-        <Button onClick={handleLoadMore} fullWidth>
-          Load more
-        </Button>
-      )} */}
     </Box>
   );
 };

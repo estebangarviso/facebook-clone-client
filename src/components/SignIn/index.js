@@ -14,11 +14,20 @@ const SignIn = () => {
     auth.login(res.data.token);
   };
   return (
-    <Form serviceCallback={AuthService.login} validationSchema={schema} onSuccess={handleSuccess} autoComplete='off'>
+    <Form
+      serviceCallback={AuthService.login}
+      validationSchema={schema}
+      defaultValues={{
+        email: '',
+        password: ''
+      }}
+      onSuccess={handleSuccess}
+      autoComplete='off'
+      data-testid='sign-in-form'>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <FormTextField name='email' label='Email' variant='outlined' />
-        <FormPassword name='password' label='Password' variant='outlined' />
-        <FormButton type='submit' variant='contained' color='primary' animated>
+        <FormTextField name='email' label='Email' variant='outlined' data-testid='email' />
+        <FormPassword name='password' label='Password' variant='outlined' data-testid='password' />
+        <FormButton type='submit' variant='contained' color='primary' animated data-testid='submit'>
           <Typography variant='button'>Log In</Typography>
         </FormButton>
       </Box>

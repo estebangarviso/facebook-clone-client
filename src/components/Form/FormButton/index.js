@@ -5,6 +5,7 @@ import { Done, Error, MoreHoriz, ScheduleSend, Send } from '@mui/icons-material'
 
 const FormButton = ({ children, color, animated, ...otherProps }) => {
   const { formState } = useFormContext();
+  const loading = formState.isSubmitting;
 
   const Icon = () => {
     const { isSubmitting, isValidating, isValid, isSubmitted, isSubmitSuccessful } = formState;
@@ -39,6 +40,7 @@ const FormButton = ({ children, color, animated, ...otherProps }) => {
 
   return animated ? (
     <Button
+      disabled={loading}
       endIcon={<Icon />}
       // disabled={formState.isDirty === false || formState.isValid === false}
       color={handleColor()}
@@ -46,7 +48,9 @@ const FormButton = ({ children, color, animated, ...otherProps }) => {
       {children}
     </Button>
   ) : (
-    <Button {...otherProps}>{children}</Button>
+    <Button disabled={loading} {...otherProps}>
+      {children}
+    </Button>
   );
 };
 export default FormButton;
