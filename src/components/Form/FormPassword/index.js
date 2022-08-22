@@ -20,7 +20,7 @@ const FormPassword = ({ name, ...otherProps }) => {
           InputProps={{
             endAdornment: (
               <InputAdornment position='end'>
-                <IconButton onClick={handleClick} edge='end'>
+                <IconButton onClick={handleClick} edge='end' data-testid={`${name}-toggle-password`}>
                   {showPassword ? <Visibility /> : <VisibilityOff />}
                 </IconButton>
               </InputAdornment>

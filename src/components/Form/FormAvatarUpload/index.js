@@ -8,35 +8,34 @@ import { Box } from '@mui/material';
 const FormAvatarUpload = ({ name, label, ...otherProps }) => {
   const [avatar, setAvatar] = useState('');
   const theme = useTheme();
-  const { control, setValue, resetField } = useFormContext();
+  const { control, reset } = useFormContext();
 
   return (
     <Controller
-      render={({ field, fieldState: { error } }) => {
+      render={({ field: { onChange, ...otherFieldProps }, fieldState: { error } }) => {
         const handleReset = () => {
-          console.log('reset:before', 'field value is', field.value);
-          resetField(name);
+          reset({ [name]: '' });
           setAvatar('');
-          console.log('reset:after', 'field value is', field.value);
+          console.log('reset:before', 'field value is', otherFieldProps.value);
         };
 
         const handleChange = (e) => {
           const file = e.target.files[0];
           const reader = new FileReader();
-          reader.onload = (e) => {
+          reader.onloadend = (e) => {
             const dataUrl = e.target.result; // blob://adadasdasd
             setAvatar(dataUrl);
           };
           reader.readAsDataURL(file);
 
-          return field.onChange(e);
+          return onChange(e);
         };
 
         return (
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <Badge
               badgeContent={
-                field.value ? (
+                otherFieldProps.value ? (
                   <IconButton onClick={handleReset}>
                     <DeleteIcon />
                   </IconButton>
@@ -50,8 +49,14 @@ const FormAvatarUpload = ({ name, label, ...otherProps }) => {
               aria-label='upload picture'
               component='label'
               {...otherProps}
-              disabled={!!field.value}>
-              <input hidden accept='image/*, image/heic, image/heif' type='file' {...field} onChange={handleChange} />
+              disabled={!!otherFieldProps.value}>
+              <input
+                hidden
+                accept='image/*, image/heic, image/heif'
+                type='file'
+                onChange={handleChange}
+                {...otherFieldProps}
+              />
               <UploadIcon mr={2} />
               Upload
             </Button>

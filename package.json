@@ -33,16 +33,29 @@
     "redux-subscriber": "^1.1.0",
     "styled-components": "^5.3.5",
     "web-vitals": "^2.1.4",
+    "workbox-background-sync": "^6.5.4",
+    "workbox-broadcast-update": "^6.5.4",
+    "workbox-cacheable-response": "^6.5.4",
+    "workbox-core": "^6.5.4",
+    "workbox-expiration": "^6.5.4",
+    "workbox-google-analytics": "^6.5.4",
+    "workbox-navigation-preload": "^6.5.4",
+    "workbox-precaching": "^6.5.4",
+    "workbox-range-requests": "^6.5.4",
+    "workbox-routing": "^6.5.4",
+    "workbox-strategies": "^6.5.4",
+    "workbox-streams": "^6.5.4",
     "yup": "^0.32.11"
   },
   "scripts": {
     "start": "react-scripts start",
     "build:serve": "yarn build && yarn serve",
-    "serve": "cd build && react-scripts start",
-    "build": "react-scripts build",
+    "serve": "serve -s build",
+    "build": "react-scripts build && react-scripts build && yarn build-sw",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "tests": "node --experimental-specifier-resolution=node --no-warnings src/tests"
+    "tests": "node --experimental-specifier-resolution=node --no-warnings src/tests",
+    "build-sw": "node ./src/service-worker-builder.js"
   },
   "eslintConfig": {
     "rules": {

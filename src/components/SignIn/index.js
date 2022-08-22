@@ -25,8 +25,9 @@ const SignIn = () => {
       autoComplete='off'
       data-testid='sign-in-form'>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <FormTextField name='email' label='Email' variant='outlined' data-testid='email' />
-        <FormPassword name='password' label='Password' variant='outlined' data-testid='password' />
+        <Typography variant='h5'>Sign In</Typography>
+        <FormTextField name='email' label='Email' variant='outlined' inputProps={{ 'data-testid': 'email' }} />
+        <FormPassword name='password' label='Password' variant='outlined' inputProps={{ 'data-testid': 'password' }} />
         <FormButton type='submit' variant='contained' color='primary' animated data-testid='submit'>
           <Typography variant='button'>Log In</Typography>
         </FormButton>
