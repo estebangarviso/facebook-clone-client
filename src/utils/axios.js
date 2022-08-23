@@ -5,6 +5,7 @@ import { BACKEND_URL } from '../app/config';
 axios.defaults.baseURL = BACKEND_URL;
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common['Content-Type'] = 'multipart/form-data';
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 
 axios.interceptors.request.use(
   (config) => {
